@@ -12,9 +12,9 @@ defmodule Plrt do
   end
 
   match _ do
-    halt(send_resp(conn, 404, "Not Found"))
+    send_resp(conn, 404, "Not Found")
   end
 
 end
 
-Plug.Adapters.Cowboy.http(Plrt, [])
+Plug.Adapters.Cowboy.http(Plrt, Plrt.init([]))
