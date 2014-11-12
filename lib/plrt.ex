@@ -1,14 +1,14 @@
 defmodule Plrt do
   import Plug.Conn
+  use Plug.Router
 
-  def init(options) do
-    options
-  end
+  plug :match
+  plug :dispatch
 
-  def call(conn, _opts) do
-    send_resp(conn, 200, "Hello world")
+  match _ do
+    halt(send_resp(conn, 200, "Hello world"))
   end
 
 end
 
-Plug.Adapters.Cowboy.http Plrt, []
+Plug.Adapters.Cowboy.http(Plrt, [])
