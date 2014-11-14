@@ -17,4 +17,4 @@ defmodule Plrt do
 
 end
 
-Plug.Adapters.Cowboy.http(Plrt, Plrt.init([]))
+Plug.Adapters.Cowboy.http(Plrt, [])
