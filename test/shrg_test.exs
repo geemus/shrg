@@ -1,4 +1,4 @@
-defmodule PlrtTest do
+defmodule ShrgTest do
   use ExUnit.Case
 
   test "the truth" do

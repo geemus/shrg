@@ -1,4 +1,4 @@
-defmodule Plrt do
+defmodule Shrg do
   import Plug.Conn
   use Plug.Router
 
@@ -17,4 +17,4 @@ defmodule Plrt do
 
 end
 
-Plug.Adapters.Cowboy.http(Plrt, [])
+Plug.Adapters.Cowboy.http(Shrg, [])
