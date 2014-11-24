@@ -12,7 +12,14 @@ defmodule Shrg.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:cowboy, :logger, :plug]]
+    [
+      applications: [
+        :cowboy,
+        :httpoison,
+        :logger,
+        :plug
+      ]
+    ]
   end
 
   # Dependencies can be Hex packages:
