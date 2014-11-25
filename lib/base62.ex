@@ -2,6 +2,10 @@ defmodule Base62 do
 
   def encode(integer, string \\ "")
 
+  def encode(0, "") do
+    "0"
+  end
+
   def encode(integer, string) when integer == 0 do
     string
   end
