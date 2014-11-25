@@ -21,4 +21,3 @@ defmodule Base62 do
   end
 
 end
-
