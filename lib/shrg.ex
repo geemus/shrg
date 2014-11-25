@@ -6,9 +6,13 @@ defmodule Shrg do
   plug :dispatch
 
   get ":code" do
-    conn
-    |> put_resp_header("Location", "https://google.com#q=#{code}")
-    |> send_resp(307, "Temporary Redirect")
+    if location = DynamoDB.get_link(code) do
+      conn
+      |> put_resp_header("Location", location)
+      |> send_resp(307, "Temporary Redirect")
+    else
+      send_resp(conn, 404, "Not Found")
+    end
   end
 
   match _ do

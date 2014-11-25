@@ -17,6 +17,7 @@ defmodule Shrg.Mixfile do
         :cowboy,
         :httpoison,
         :logger,
+        :poison,
         :plug
       ]
     ]
