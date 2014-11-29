@@ -1,6 +1,8 @@
 defmodule DynamoDB do
 
-  def get_link(code) do
+  def request(action, payload) do
+    payload = Poison.encode!(payload)
+
     now = Timex.Date.now()
     date      = now |> Timex.DateFormat.format!("{ISOdate}") |> String.replace("-", "")
     datetime  = now |> Timex.DateFormat.format!("{ISOz}") |> String.replace(~r{[-:]}, "")
@@ -12,17 +14,7 @@ defmodule DynamoDB do
     host          = "dynamodb.#{region}.amazonaws.com"
 
     service     = "dynamodb"
-    action      = "GetItem"
     target      = "DynamoDB_20120810.#{action}"
-
-    payload = Poison.encode!(%{
-      "TableName" => System.get_env("DYNAMO_DB_TABLE"),
-      "Key"       => %{
-        "code" => %{
-          "S" => code
-        }
-      }
-    })
 
     algorithm         = "AWS4-HMAC-SHA256"
     credential_scope  = "#{date}/#{region}/dynamodb/aws4_request"
@@ -69,14 +61,12 @@ AWS4-HMAC-SHA256
 
     HTTPoison.start
 
-    response = HTTPoison.request!(
+    HTTPoison.request!(
       :post,
       "https://#{host}/",
       payload,
       headers
     )
-
-    Poison.decode!(response.body)["Item"]["url"]["S"]
   end
 
 end

@@ -6,7 +6,19 @@ defmodule Shrg do
   plug :dispatch
 
   get ":code" do
-    if location = DynamoDB.get_link(code) do
+    response = DynamoDB.request(
+      "GetItem",
+      %{
+        "TableName" => System.get_env("DYNAMO_DB_TABLE"),
+        "Key"       => %{
+          "code" => %{
+            "S" => code
+          }
+        }
+      }
+    )
+
+    if location = Poison.decode!(response.body)["Item"]["url"]["S"] do
       conn
       |> put_resp_header("Location", location)
       |> send_resp(307, "Temporary Redirect")
